@@ -15,6 +15,7 @@ namespace NPBehave
                 gameObject.name = "~Context";
                 instance = (UnityContext)gameObject.AddComponent(typeof(UnityContext));
                 gameObject.isStatic = true;
+                DontDestroyOnLoad(gameObject);
 #if !UNITY_EDITOR
             gameObject.hideFlags = HideFlags.HideAndDontSave;
 #endif
