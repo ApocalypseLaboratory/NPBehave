@@ -1,0 +1,28 @@
+#InspectorTitle{
+	-unity-text-align: middle-center;
+    -unity-font-style: bold;
+    border-bottom-width: 0;
+    border-bottom-color: rgb(103, 103, 103);
+    background-color: rgb(43, 43, 43);
+    font-size: 16px;
+    margin-bottom: 4px;
+    margin-left: 0px;
+    margin-right: 0px;
+    margin-top: 0;
+    padding-top: 2px;
+    padding-bottom: 2px;
+}
+
+#BlackboardTitle {
+    -unity-font-style: bold;
+    font-size: 16px;
+    -unity-text-align: middle-center;
+    -unity-background-image-tint-color: rgb(44, 44, 44);
+    background-color: rgb(44, 44, 44);
+    margin-bottom: 4px;
+    margin-left: 0px;
+    margin-right: 0px;
+    margin-top: 0;
+    padding-top: 2px;
+    padding-bottom: 2px;
+}

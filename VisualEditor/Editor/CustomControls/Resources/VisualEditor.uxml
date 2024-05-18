@@ -1,0 +1,16 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="True">
+    <Style src="project://database/Assets/NPBehave/VisualEditor/CustomControls/Resources/VisualEditor.uss?fileID=7433441132597879392&amp;guid=3c392f75cd3c97443b94dfbe4191c868&amp;type=3#VisualEditor" />
+    <uie:Toolbar name="Toolbar">
+        <uie:ToolbarButton text="Open" parse-escape-sequences="true" display-tooltip-when-elided="true" name="open" />
+        <uie:ToolbarButton text="Save" display-tooltip-when-elided="true" name="save" />
+        <uie:ToolbarSpacer style="width: 8px;" />
+        <uie:ToolbarButton text="New" display-tooltip-when-elided="true" name="new" />
+        <ui:TextField picking-mode="Ignore" text="" name="newbtname" readonly="false" style="min-width: 96px;" />
+        <uie:ToolbarSpacer style="width: 8px;" />
+        <ui:VisualElement style="flex-shrink: 0; flex-grow: 1; align-items: center; justify-content: flex-start; max-width: none; width: auto; left: auto;">
+            <ui:Label tabindex="-1" text="Label" parse-escape-sequences="true" display-tooltip-when-elided="true" name="TreeName" style="-unity-font-style: bold; font-size: 20px; -unity-text-align: middle-center; color: rgb(180, 180, 180);" />
+        </ui:VisualElement>
+        <uie:ToolbarButton text="Delete" display-tooltip-when-elided="true" name="delete" />
+    </uie:Toolbar>
+    <NPVisualEditor.MainView />
+</ui:UXML>
