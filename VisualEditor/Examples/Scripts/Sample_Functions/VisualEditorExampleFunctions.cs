@@ -21,8 +21,8 @@ namespace NPVisualEditor_Example
 
         public void TestFunctions()
         {
-            m_functionsCase.LoadBehavoirNodes();
-            m_functionsCase.StartBehavoir();
+            m_functionsCase.LoadBehaviorNodes();
+            m_functionsCase.StartBehavior();
         }
 
         private FunctionsCase m_functionsCase;

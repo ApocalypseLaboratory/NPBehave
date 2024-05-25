@@ -1,23 +1,20 @@
 using NPBehave;
 using NPSerialization;
-using System.IO;
 using UnityEngine;
 
 namespace NPVisualEditor_Example
 {
-    public partial class Boss : ISampleNPC, IBehavoiral
+    public partial class FunctionsCase : IBehavioral
     {
-        public NPCModel NPCModel { get; set; }
-
         public Root GetRoot()
         {
             return m_root;
         }
 
-        public void LoadBehavoirNodes()
+        public void LoadBehaviorNodes()
         {
             var jsonStream = new JsonStream();
-            string path = "sample_boss";
+            string path = "sample_functions";
             jsonStream.ReadLocator = (string _path) =>
             {
                 var textAsset = Resources.Load(_path) as TextAsset;
@@ -31,35 +28,18 @@ namespace NPVisualEditor_Example
             m_blackboard = m_root.Blackboard;
         }
 
-        public void StartBehavoir()
+        public void StartBehavior()
         {
             m_root.Start();
         }
 
-        public void StopBehavoir()
+        public void StopBehavior()
         {
             m_root.Stop();
         }
 
         public void UpdateBlackBoard()
         {
-            m_blackboard["I_HP"] = m_npc.HP;
-            m_blackboard["I_POWER"] = m_npc.Power;
-
-            m_blackboard["B_NEAR_CHARACTER"] = false;
-            var characterGO = GameObject.FindGameObjectWithTag("CHARACTER");
-            if (characterGO != null)
-            {
-                var model = characterGO.GetComponent<NPCModel>();
-                if (model != m_npc)
-                {
-                    if (Vector3.Distance(model.Position, m_npc.Position) < 5)
-                    {
-                        m_blackboard["F_LAST_FOUND_CHARACTER"] = Time.time;
-                        m_blackboard["B_NEAR_CHARACTER"] = true;
-                    }
-                }
-            }
         }
 
         private Root m_root;

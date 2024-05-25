@@ -34,7 +34,7 @@ namespace NPVisualEditor
                 {
                         foreach (var nodeClsType in node.Value)
                         {
-                            string path = "Behavoir Nodes/" + node.Key.ToString() +  "/" + nodeClsType.Name;
+                            string path = "Behavior Nodes/" + node.Key.ToString() +  "/" + nodeClsType.Name;
                             evt.menu.AppendAction(path, 
                                 (DropdownMenuAction dropdownMenuAction) =>
                                 {

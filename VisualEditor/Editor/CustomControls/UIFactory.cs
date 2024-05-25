@@ -163,12 +163,33 @@ namespace NPVisualEditor
             {
                 element = new VisualElement();
                 element.style.flexDirection = FlexDirection.Column;
+                element.style.borderBottomWidth = 1;
+                element.style.borderBottomColor = Color.gray;
+                element.style.borderTopWidth = 1;
+                element.style.borderTopColor = Color.gray;
 
                 BlackboardKVData blackboardKVData = (BlackboardKVData)fieldInfo.GetValue(obj);
+
+                var typeElem = new EnumField(label, blackboardKVData.m_compareType);
+                typeElem.RegisterCallback<ChangeEvent<Enum>>((evt) =>
+                {
+                    blackboardKVData.m_compareType = (CompareType)evt.newValue;
+                    GraphicUtils.UpdateGraphNode(node);
+                    updateSelf?.Invoke();
+                });
+
+                element.Add(typeElem);
+
                 var keyElem = new TextField("key")
                 {
                     value = blackboardKVData.m_key
                 };
+
+                keyElem.RegisterCallback<FocusOutEvent>((evt) =>
+                {
+                    blackboardKVData.m_key = keyElem.value;
+                    GraphicUtils.UpdateGraphNode(node);
+                });
 
                 VisualElement valueElem = null;
                 switch (blackboardKVData.m_compareType)
@@ -178,27 +199,47 @@ namespace NPVisualEditor
                         {
                             value = blackboardKVData.m_theStringValue
                         };
+
+                        valueElem.RegisterCallback<FocusOutEvent>((evt) =>
+                        {
+                            blackboardKVData.m_theStringValue = ((TextField)valueElem).value;
+                            GraphicUtils.UpdateGraphNode(node);
+                        });
                         break;
                     case CompareType.TFloat:
                         valueElem = new FloatField("value")
                         {
                             value = blackboardKVData.m_theFloatValue
                         };
+
+                        valueElem.RegisterCallback<FocusOutEvent>((evt) =>
+                        {
+                            blackboardKVData.m_theFloatValue = ((FloatField)valueElem).value;
+                            GraphicUtils.UpdateGraphNode(node);
+                        });
                         break;
                     case CompareType.TInt:
                         valueElem = new IntegerField("value")
                         {
                             value = blackboardKVData.m_theIntValue
                         };
+
+                        valueElem.RegisterCallback<FocusOutEvent>((evt) =>
+                        {
+                            blackboardKVData.m_theIntValue = ((IntegerField)valueElem).value;
+                            GraphicUtils.UpdateGraphNode(node);
+                        });
                         break;
                     case CompareType.TBoolean:
                         valueElem = new Toggle("value")
                         {
                             value = blackboardKVData.m_theBoolValue
                         };
+
                         valueElem.RegisterCallback<ChangeEvent<bool>>((evt) =>
                         {
-                            fieldInfo.SetValue(obj, ((TextField)element).value);
+                            blackboardKVData.m_theBoolValue = evt.newValue;
+                            GraphicUtils.UpdateGraphNode(node);
                         });
                         break;
                 }

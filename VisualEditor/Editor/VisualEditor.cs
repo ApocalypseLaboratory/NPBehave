@@ -188,7 +188,7 @@ namespace NPVisualEditor
                 switch (option)
                 {
                     case 0:
-                        string path = EditorUtility.SaveFilePanel("Save behavoir tree as json", Application.dataPath, fileName + ".json", "json");
+                        string path = EditorUtility.SaveFilePanel("Save behavior tree as json", Application.dataPath, fileName + ".json", "json");
                         if (path.Length != 0)
                         {
                             var jsonStream = new JsonStream();
