@@ -16,6 +16,7 @@ namespace NPSerialization
     [KnownType(typeof(SelectorData))]
     [KnownType(typeof(SequenceData))]
     [KnownType(typeof(BlackboardConditionData))]
+    [KnownType(typeof(BlackboardQueryData))]
     [KnownType(typeof(ServiceData))]
     [KnownType(typeof(RootData))]
     [KnownType(typeof(ActionData))]
