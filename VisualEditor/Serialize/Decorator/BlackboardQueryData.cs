@@ -12,7 +12,7 @@ namespace NPSerialization
         public Stops m_stopsOnChange;
 
         [JsonIgnore]
-        public BlackboardQuery m_blackboardQuery;
+        private BlackboardQuery m_blackboardQuery;
 
         public BlackboardQueryData() : base()
         {

@@ -12,7 +12,7 @@ namespace NPSerialization
         public BlackboardKVData m_blackboardData = new();
 
         [JsonIgnore]
-        public BlackboardCondition m_blackboardCondition;
+        private BlackboardCondition m_blackboardCondition;
 
         public BlackboardConditionData() : base()
         {

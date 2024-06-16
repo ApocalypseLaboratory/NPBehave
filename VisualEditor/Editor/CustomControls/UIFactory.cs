@@ -159,6 +159,71 @@ namespace NPVisualEditor
                 element.Add(funcElement);
                 element.Add(methodContanier);
             }
+            else if (type == typeof(WaitData.WaitFunctionData))
+            {
+                element = new VisualElement();
+                element.style.borderBottomWidth = 1;
+                element.style.borderBottomColor = Color.gray;
+                element.style.borderTopWidth = 1;
+                element.style.borderTopColor = Color.gray;
+
+                element.style.flexDirection = FlexDirection.Column;
+                var methodContanier = new VisualElement();
+                methodContanier.style.flexDirection = FlexDirection.Row;
+
+                WaitData.WaitFunctionData waitFuncData = (WaitData.WaitFunctionData)fieldInfo.GetValue(obj);
+                string funcName = waitFuncData.GetMethodName();
+                var funcElement = new TextField(label)
+                {
+                    value = funcName
+                };
+
+                var objectField = new ObjectField("new method");
+                objectField.objectType = typeof(MonoScript);
+                var dropdownField = new DropdownField();
+
+                objectField.RegisterValueChangedCallback(selectedObject => {
+                    if (selectedObject.newValue is MonoScript script)
+                    {
+                        List<MethodInfo> funcList = new();
+                        List<string> funcStringList = new();
+                        Type scriptClassType = script.GetClass();
+
+                        if (NodeDataUtils.CheckSerializationID(scriptClassType))
+                        {
+                            funcList = NodeDataUtils.GetNPWaitFuncMethods(scriptClassType, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.Instance);
+                        }
+                        else
+                        {
+                            funcList = NodeDataUtils.GetNPWaitFuncMethods(scriptClassType, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static);
+                        }
+
+                        foreach (var func in funcList)
+                        {
+                            string funcString = NodeDataUtils.GetSerializeString(func);
+                            if (!string.IsNullOrEmpty(funcString))
+                                funcStringList.Add(funcString);
+                        }
+
+                        dropdownField.choices = funcStringList;
+                    }
+                });
+
+                dropdownField.RegisterCallback<ChangeEvent<string>>((evt) =>
+                {
+                    if (waitFuncData.ResetMethod(evt.newValue))
+                    {
+                        GraphicUtils.UpdateGraphNode(node);
+                        funcElement.value = evt.newValue;
+                    }
+                });
+
+                methodContanier.Add(objectField);
+                methodContanier.Add(dropdownField);
+
+                element.Add(funcElement);
+                element.Add(methodContanier);
+            }
             else if (type == typeof(BlackboardKVData)) 
             {
                 element = new VisualElement();

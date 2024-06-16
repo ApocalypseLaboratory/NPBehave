@@ -8,7 +8,7 @@ namespace NPSerialization
         public override string TYPE_NAME_FOR_SERIALIZATION { get { return typeof(SelectorData).FullName; } }
 
         [JsonIgnore]
-        public Selector m_selector;
+        private Selector m_selector;
 
         public SelectorData() : base()
         {

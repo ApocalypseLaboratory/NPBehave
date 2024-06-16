@@ -3,32 +3,32 @@ using NPBehave;
 
 namespace NPSerialization
 {
-    public class RootData : NodeData
+    public class InvertData : NodeData
     {
-        public override string TYPE_NAME_FOR_SERIALIZATION { get { return typeof(RootData).FullName; } }
+        public override string TYPE_NAME_FOR_SERIALIZATION { get { return typeof(InvertData).FullName; } }
 
         [JsonIgnore]
-        private Root m_root;
+        private Inverter m_inverter;
 
-        public RootData() : base()
+        public InvertData() : base() 
         {
             m_nodeType = NodeType.Decorator;
         }
 
-        public RootData(long id) : base(id)
+        public InvertData(long id) : base(id)
         {
             m_nodeType = NodeType.Decorator;
         }
 
         public override Decorator CreateDecorator(Node node)
         {
-            m_root = new Root(node);
-            return m_root;
+            m_inverter = new Inverter(node);
+            return m_inverter;
         }
 
         public override Node GetNode()
         {
-            return m_root;
+            return m_inverter;
         }
     }
 }

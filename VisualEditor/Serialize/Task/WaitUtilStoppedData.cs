@@ -8,7 +8,7 @@ namespace NPSerialization
         public override string TYPE_NAME_FOR_SERIALIZATION { get { return typeof(WaitUtilStoppedData).FullName; } }
 
         [JsonIgnore]
-        public WaitUntilStopped m_waitUtilStopped;
+        private WaitUntilStopped m_waitUtilStopped;
         public bool sucessWhenStopped = false;
 
         public WaitUtilStoppedData() : base()

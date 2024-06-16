@@ -8,7 +8,7 @@ namespace NPSerialization
         public override string TYPE_NAME_FOR_SERIALIZATION { get { return typeof(ActionData).FullName; } }
 
         [JsonIgnore]
-        public Action m_action;
+        private Action m_action;
 
         public DelegateData m_actionData = new();
 

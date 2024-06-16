@@ -8,7 +8,7 @@ namespace NPSerialization
         public override string TYPE_NAME_FOR_SERIALIZATION { get { return typeof(SequenceData).FullName; } }
 
         [JsonIgnore]
-        public Sequence m_sequence;
+        private Sequence m_sequence;
 
         public SequenceData() : base()
         {

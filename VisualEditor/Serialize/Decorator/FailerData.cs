@@ -3,32 +3,32 @@ using NPBehave;
 
 namespace NPSerialization
 {
-    public class RootData : NodeData
+    public class FailerData : NodeData
     {
-        public override string TYPE_NAME_FOR_SERIALIZATION { get { return typeof(RootData).FullName; } }
+        public override string TYPE_NAME_FOR_SERIALIZATION { get { return typeof(FailerData).FullName; } }
 
         [JsonIgnore]
-        private Root m_root;
+        private Failer m_failer;
 
-        public RootData() : base()
+        public FailerData() : base() 
         {
             m_nodeType = NodeType.Decorator;
         }
 
-        public RootData(long id) : base(id)
+        public FailerData(long id) : base(id) 
         {
             m_nodeType = NodeType.Decorator;
         }
 
         public override Decorator CreateDecorator(Node node)
         {
-            m_root = new Root(node);
-            return m_root;
+            m_failer = new Failer(node);
+            return m_failer;    
         }
 
         public override Node GetNode()
         {
-            return m_root;
+            return m_failer;
         }
     }
 }

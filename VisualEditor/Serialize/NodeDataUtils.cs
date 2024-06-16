@@ -135,6 +135,16 @@ namespace NPSerialization
             return attributes.Length > 0;
         }
 
+        public static List<MethodInfo> GetNPWaitFuncMethods(Type type, BindingFlags flags)
+        {
+            List<MethodInfo> taskMethods = new List<MethodInfo>();
+
+            // Func<bool>
+            taskMethods.AddRange(GetMethodsWithSignature(type, flags, typeof(float), null));
+
+            return taskMethods;
+        }
+
         public static List<MethodInfo> GetNPTaskMethods(Type type, BindingFlags flags)
         {
             List<MethodInfo> taskMethods = new List<MethodInfo>();

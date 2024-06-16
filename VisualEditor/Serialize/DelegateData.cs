@@ -99,7 +99,7 @@ namespace NPSerialization
             }
         }
 
-        private string GetSerializeString<T>(T delegateFunction) where T : System.Delegate
+        public static string GetSerializeString<T>(T delegateFunction) where T : System.Delegate
         {
             if (delegateFunction == null)
                 return null;
@@ -298,7 +298,7 @@ namespace NPSerialization
             }
         }
 
-        private static bool TryGetInstance(string delegateString, out object instance, out MethodInfo method)
+        public static bool TryGetInstance(string delegateString, out object instance, out MethodInfo method)
         {
             var parts = delegateString.Split('|');
 

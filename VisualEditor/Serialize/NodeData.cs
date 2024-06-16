@@ -22,6 +22,16 @@ namespace NPSerialization
     [KnownType(typeof(ActionData))]
     [KnownType(typeof(WaitData))]
     [KnownType(typeof(WaitUtilStoppedData))]
+    [KnownType(typeof(ConditionData))]
+    [KnownType(typeof(CooldownData))]
+    [KnownType(typeof(FailerData))]
+    [KnownType(typeof(InvertData))]
+    [KnownType(typeof(RandomData))]
+    [KnownType(typeof(RepeaterData))]
+    [KnownType(typeof(SucceederData))]
+    [KnownType(typeof(TimeMaxData))]
+    [KnownType(typeof(TimeMinData))]
+    [KnownType(typeof(WaitForConditionData))]
     public class NodeData
     {
         // Must be override

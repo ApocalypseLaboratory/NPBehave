@@ -8,7 +8,7 @@ namespace NPSerialization
         public override string TYPE_NAME_FOR_SERIALIZATION { get { return typeof(ServiceData).FullName; } }
 
         [JsonIgnore]
-        public Service m_service;
+        private Service m_service;
 
         public float m_interval = -1.0f;
         public DelegateData m_delegateData = new();
