@@ -211,7 +211,7 @@ namespace NPSerialization
 
                 Type[] parameterTypes = methodInfo.GetParameters().Select(p => p.ParameterType).ToArray();
 
-                if (methodInfo.ReturnType == typeof(bool))
+                if (methodInfo.ReturnType == typeof(float))
                 {
                     if (parameterTypes.Length == 0)
                     {
