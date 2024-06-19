@@ -1,5 +1,6 @@
 using NPBehave;
 using NPSerialization;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEditor.Experimental.GraphView;
@@ -55,7 +56,7 @@ namespace NPVisualEditor
             Queue<GraphNode> queue = new Queue<GraphNode>();
             queue.Enqueue(node);
             float y = GetPosition(node).y;
-            
+
             while (queue.Count > 0)
             {
                 List<GraphNode> nodeLayer = new();
@@ -63,14 +64,14 @@ namespace NPVisualEditor
                 {
                     var curNode = queue.Dequeue();
                     var pos = GetPosition(curNode);
-                    SetPosition(curNode, new Vector2(pos.x, y));
+                    SetPosition(curNode, new Vector2(0, y));
                     nodeLayer.Add(curNode);
                 }
                 nodeLayers.Add(nodeLayer);
 
-                foreach(var layerNode in nodeLayer)
+                foreach (var layerNode in nodeLayer)
                 {
-                    foreach(var child in  GetChildren(layerNode))
+                    foreach (var child in GetChildren(layerNode))
                     {
                         queue.Enqueue(child);
                     }
@@ -87,13 +88,13 @@ namespace NPVisualEditor
             if (children.Count == 0)
                 return;
 
-            float start = GetPosition(node).x - (children.Count - 1) * IntervalX / 2;
+            float start = GetPosition(node).x - (children.Count - 1) * IntervalX / 2.0f;
 
             int i = 0;
             foreach (var child in children)
             {
                 float x = start + i * IntervalX;
-                TranslateTree(child, x - child.style.width.value.value);
+                TranslateTree(child, x);
                 LayoutChild(child);
                 i++;
             }
@@ -110,8 +111,8 @@ namespace NPVisualEditor
                     {
                         float dx = GetPosition(layer[j]).x - GetPosition(layer[j + 1]).x + IntervalX;
                         GraphNode commonParent = FindCommonParentNode(layer[j], layer[j + 1]);
-                        TranslateTree(commonParent, dx);
-                        CenterChildren(commonParent);
+                        TranslateTree(commonParent, GetPosition(commonParent).x + dx);
+                        CenterChildren(GetParent(commonParent));
 
                         i = nodeLayers.Count;
                     }
@@ -143,24 +144,31 @@ namespace NPVisualEditor
             return connectedNode;
         }
 
+        /// <summary>
+        /// Find the ancestor node of node2 that is sibling to a certain ancestor node of node1
+        /// </summary>
+        /// <param name="node1"></param>
+        /// <param name="node2"></param>
+        /// <returns></returns>
         public static GraphNode FindCommonParentNode(GraphNode node1, GraphNode node2)
         {
             GraphNode node1Parent = GetParent(node1);
             GraphNode node2Parent = GetParent(node2);
             if (node1Parent == node2Parent)
-                return node1Parent;
+                return node2;
             else
                 return FindCommonParentNode(node1Parent, node2Parent);
         }
 
-        private static void TranslateTree(GraphNode node, float dx)
+        private static void TranslateTree(GraphNode node, float x)
         {
             var pos = GetPosition(node);
-            SetPosition(node, new Vector2(pos.x + dx, pos.y));
+            float dx = x - pos.x;
+            SetPosition(node, new Vector2(x, pos.y));
 
             foreach (var childNode in GetChildren(node))
             {
-                TranslateTree(childNode, dx);
+                TranslateTree(childNode, GetPosition(childNode).x + dx);
             }
         }
 
@@ -179,21 +187,21 @@ namespace NPVisualEditor
 
             if (children.Count > 1)
             {
-                dx = GetPosition(node).x - (GetPosition(children[0]).x + (GetPosition(children[children.Count - 1]).x - GetPosition(children[0]).x));
+                dx = GetPosition(node).x - (GetPosition(children[0]).x + (GetPosition(children[children.Count - 1]).x - GetPosition(children[0]).x) / 2.0f);
             }
 
             if (Mathf.Abs(dx) > float.Epsilon)
             {
                 foreach (var childNode in children)
                 {
-                    TranslateTree(childNode, dx);
+                    TranslateTree(childNode, GetPosition(childNode).x + dx);
                 }
             }
         }
 
         private static bool IsOverlaps(GraphNode node1, GraphNode node2)
         {
-            return (GetPosition(node1).x - GetPosition(node2).x > 0) || (GetPosition(node2).x - GetPosition(node1).x <  IntervalX);
+            return (GetPosition(node1).x - GetPosition(node2).x > 0) || (GetPosition(node2).x - GetPosition(node1).x < IntervalX);
         }
 
         public static Vector2 GetPosition(GraphNode node)
@@ -208,7 +216,7 @@ namespace NPVisualEditor
         {
             Rect rect = new(position, DEFAULT_NODE_SIZE);
             node.SetPosition(rect);
-            node.MarkDirtyRepaint();             
+            node.MarkDirtyRepaint();
         }
 
         public static float IntervalX = 300f;
