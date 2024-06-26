@@ -30,7 +30,7 @@ namespace NPSerialization
 
         public override Task CreateTask()
         {
-            if (string.IsNullOrEmpty(m_blackboardKey))
+            if (!string.IsNullOrEmpty(m_blackboardKey))
             {
                 if (m_randomVariance != float.NaN)
                 {
@@ -41,7 +41,7 @@ namespace NPSerialization
                     m_wait = new Wait(m_blackboardKey, m_randomVariance);
                 }
             }
-            else if (string.IsNullOrEmpty(m_waitFunctionData.WaitFuncString))
+            else if (!string.IsNullOrEmpty(m_waitFunctionData.WaitFuncString))
             {
                 if (!m_waitFunctionData.IsDelegateCreated())
                     m_waitFunctionData.CreateDelegate();
@@ -165,7 +165,7 @@ namespace NPSerialization
 
             public void CreateDelegate()
             {
-                if (string.IsNullOrEmpty(m_waitFuncName))
+                if (!string.IsNullOrEmpty(m_waitFuncName))
                 {
                     m_waitFunc = GetDelegate<Func<float>>(m_waitFuncName);
                 }
